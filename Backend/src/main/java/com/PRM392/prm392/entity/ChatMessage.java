@@ -1,28 +1,30 @@
 package com.PRM392.prm392.entity;
 
-import com.PRM392.prm392.enums.Status.CartStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Date;
+
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "carts")
-public class Carts {
+@Table(name = "chat_messages")
+public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id")
-    Integer cart_id;
+    @Column(name = "chat_message_id")
+    Integer chatMessageId;
 
     @JoinColumn(name = "user_id")
-    Integer user_id;
+    Integer userId;
 
-    @Column(name = "total_price")
-    Double total_price;
+    @Column(name = "message")
+    String message;
 
-    @Column(name = "status")
-    CartStatus cartStatus;
+    @Column(name = "sent_at")
+    Date sentAt;
+
 }
