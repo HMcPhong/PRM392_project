@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface UserService {
 
+    boolean login(String username, String password);
+
+    boolean isExist(String username);
+
+
     /* Customer */
     User createCustomer(CustomerCreateRequet user);
 

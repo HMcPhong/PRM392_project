@@ -26,6 +26,19 @@ public class UserServiceImpl implements UserService {
         this.cartRepository = cartRepository;
     }
 
+
+    @Override
+    public boolean login(String username, String password) {
+        User user =userRepository.findByUserName(username);
+        return bCryptPasswordEncoder.matches(password, user.getPasswordHash());
+    }
+
+    @Override
+    public boolean isExist(String username) {
+        return userRepository.findByUserName(username) != null;
+    }
+
+
     /* Customer */
 
     @Override
