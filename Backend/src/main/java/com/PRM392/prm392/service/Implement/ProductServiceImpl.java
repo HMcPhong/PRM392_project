@@ -1,5 +1,6 @@
 package com.PRM392.prm392.service.Implement;
 
+import com.PRM392.prm392.entity.Categories;
 import com.PRM392.prm392.entity.Product;
 import com.PRM392.prm392.repository.ProductRepository;
 import com.PRM392.prm392.request.create.Product.ProductCreateRequest;
@@ -38,11 +39,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(int id) {
-        return null;
+        return productRepository.findByProductID(id);
     }
 
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(Categories category) {
+        return productRepository.findAllByCategoryID(category.getCategory_id());
+    }
+
+    @Override
+    public List<Product> getProductsByProductName(String productName) {
+        return productRepository.findAllByProductName(productName);
     }
 }

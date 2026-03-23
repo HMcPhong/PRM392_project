@@ -6,6 +6,8 @@ import com.PRM392.prm392.request.create.Category.CategoryCreateRequest;
 import com.PRM392.prm392.service.Interface.CategoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategotyServiceImpl implements CategoryService {
 
@@ -27,7 +29,12 @@ public class CategotyServiceImpl implements CategoryService {
     }
 
     @Override
-    public Categories getAllCategories() {
-        return null;
+    public Categories getCategoryByCategory_id(int id) {
+        return categoriesRepository.findByCategory_id(id);
+    }
+
+    @Override
+    public List<Categories> getAllCategories() {
+        return categoriesRepository.findAll();
     }
 }

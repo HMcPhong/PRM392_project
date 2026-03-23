@@ -1,5 +1,6 @@
 package com.PRM392.prm392.service.Interface;
 
+import com.PRM392.prm392.entity.Categories;
 import com.PRM392.prm392.entity.Product;
 import com.PRM392.prm392.request.create.Product.ProductCreateRequest;
 
@@ -12,5 +13,9 @@ public interface ProductService {
     Product getProduct(int id);
 
     List<Product> getAllProducts();
+
+    List<Product> getProductsByCategory(Categories category);
+
+    List<Product> getProductsByProductName(String productName);
 
 }

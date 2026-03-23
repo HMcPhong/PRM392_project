@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,7 +23,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/customer")
+    @PostMapping("/customer/sign_up")
     public ResponseEntity<ResponseData<?>> createCustomer (@RequestBody CustomerCreateRequet request){
         try {
             boolean isCreated = userService.isExist(request.getUserName());
@@ -47,6 +46,9 @@ public class UserController {
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseData<>("User not found", null));
+            } else if(!userService.login(username, password)){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponseData<>("Wrong password", null));
             }
             return ResponseEntity.ok(new ResponseData<>("Login successful", user));
         } catch (Exception e) {

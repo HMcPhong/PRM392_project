@@ -3,6 +3,7 @@ package com.PRM392.prm392.service.Implement;
 import com.PRM392.prm392.entity.Carts;
 import com.PRM392.prm392.entity.User;
 import com.PRM392.prm392.enums.Role;
+import com.PRM392.prm392.enums.Status.CartStatus;
 import com.PRM392.prm392.repository.CartRepository;
 import com.PRM392.prm392.repository.UserRepository;
 import com.PRM392.prm392.request.create.User.CustomerCreateRequet;
@@ -54,6 +55,7 @@ public class UserServiceImpl implements UserService {
 
         Carts cart = new Carts();
         cart.setUser_id(customer.getUserID());
+        cart.setCartStatus(CartStatus.ACTIVE);
         cartRepository.save(cart);
 
         return customer;
