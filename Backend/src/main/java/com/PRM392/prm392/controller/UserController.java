@@ -23,7 +23,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/customer/sign_up")
+    @PostMapping("/auth/customer/sign_up")
     public ResponseEntity<ResponseData<?>> createCustomer (@RequestBody CustomerCreateRequet request){
         try {
             boolean isCreated = userService.isExist(request.getUserName());
@@ -39,7 +39,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public ResponseEntity<ResponseData<?>> login (@RequestParam String username, @RequestParam String password){
         try {
             User user = userRepository.findByUserName(username);
