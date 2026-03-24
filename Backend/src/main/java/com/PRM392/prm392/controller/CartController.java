@@ -84,7 +84,7 @@ public class CartController {
     }
 
     // Clear cart
-    @DeleteMapping("{userID}")
+    @DeleteMapping("/{userID}")
     public ResponseEntity<ResponseData<?>> clearCart(@PathVariable("userID") int userID) {
         try {
             cartService.clearCart(userID);
