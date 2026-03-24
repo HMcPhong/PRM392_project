@@ -44,6 +44,42 @@ public class CartController {
         }
     }
 
+    // Update items' quantity
+    @PutMapping("/{userID}/{productID}")
+    public ResponseEntity<ResponseData<?>> updateCartItem(@PathVariable("userID") int userID, @PathVariable("productID") int productID, @RequestParam int quantity) {
+        try {
+            cartService.updateCartItem(userID, productID, quantity);
+            return ResponseEntity.ok(new ResponseData<>("Success", null));
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseData<>(e.getMessage(), null));
+        }
+    }
+
+    // Remove item from cart
+    @DeleteMapping("/{userID}/{productID}")
+    public ResponseEntity<ResponseData<?>> deleteCartItem(@PathVariable("userID") int userID, @PathVariable("productID") int productID) {
+        try {
+            cartService.removeCartItem(userID, productID);
+            return ResponseEntity.ok(new ResponseData<>("Success", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseData<>(e.getMessage(), null));
+        }
+    }
+
+    // Clear cart
+    @DeleteMapping("{userID}")
+    public ResponseEntity<ResponseData<?>> clearCart(@PathVariable("userID") int userID) {
+        try {
+            cartService.clearCart(userID);
+            return ResponseEntity.ok(new ResponseData<>("Success", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseData<>(e.getMessage(), null));
+        }
+    }
+
 
 
 }

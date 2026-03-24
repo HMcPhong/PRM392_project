@@ -10,4 +10,8 @@ public interface CartService {
 
     void updateCartItem(int userId, int productId, int quantity);
 
+    void removeCartItem(int userId, int productId);
+
+    void clearCart(int userId);
+
 }
