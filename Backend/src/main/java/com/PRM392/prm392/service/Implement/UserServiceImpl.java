@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         customer = userRepository.save(customer);
 
         Carts cart = new Carts();
-        cart.setUser_id(customer.getUserID());
+        cart.setUserId(customer.getUserID());
         cart.setCartStatus(CartStatus.ACTIVE);
         cartRepository.save(cart);
 

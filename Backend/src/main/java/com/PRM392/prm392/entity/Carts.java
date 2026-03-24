@@ -18,7 +18,7 @@ public class Carts {
     Integer cart_id;
 
     @JoinColumn(name = "user_id")
-    Integer user_id;
+    Integer userId;
 
     @Column(name = "total_price")
     Double total_price;

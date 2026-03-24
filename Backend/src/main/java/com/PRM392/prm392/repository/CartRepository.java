@@ -4,5 +4,5 @@ import com.PRM392.prm392.entity.Carts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<Carts, Integer> {
-    Carts findByCustomerId(Integer customerId);
+    Carts findCartsByUserId(int user_id);
 }

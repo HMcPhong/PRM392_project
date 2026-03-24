@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
     Categories addCategory(CategoryCreateRequest category);
 
-    Categories getCategoryByCategory_id(int id);
+    Categories getCategoryByCategoryId(int id);
 
     List<Categories> getAllCategories();
 }

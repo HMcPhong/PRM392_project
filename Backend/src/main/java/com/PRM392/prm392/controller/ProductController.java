@@ -60,7 +60,7 @@ public class ProductController {
     @GetMapping("/{category_id}")
     public ResponseEntity<ResponseData<?>> getProductByCategory(@PathVariable int category_id) {
         try {
-            Categories categories = categoryService.getCategoryByCategory_id(category_id);
+            Categories categories = categoryService.getCategoryByCategoryId(category_id);
             List<Product> products = productService.getProductsByCategory(categories);
             return ResponseEntity.ok(new ResponseData<>("Products found", products));
         } catch (Exception e) {

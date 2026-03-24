@@ -21,7 +21,7 @@ public class CategotyServiceImpl implements CategoryService {
     @Override
     public Categories addCategory(CategoryCreateRequest request) {
         Categories categories = new Categories();
-        categories.setCategory_name(request.getCategoryName());
+        categories.setCategoryName(request.getCategoryName());
 
         categoriesRepository.save(categories);
 
@@ -29,8 +29,8 @@ public class CategotyServiceImpl implements CategoryService {
     }
 
     @Override
-    public Categories getCategoryByCategory_id(int id) {
-        return categoriesRepository.findByCategory_id(id);
+    public Categories getCategoryByCategoryId(int id) {
+        return categoriesRepository.findByCategoryId(id);
     }
 
     @Override

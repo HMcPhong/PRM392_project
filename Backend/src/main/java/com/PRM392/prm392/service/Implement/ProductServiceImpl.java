@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
         if(request.getTechnicalSpecification() != null) product.setTechnicalSpecifications(request.getTechnicalSpecification());
         product.setPrice(request.getPrice());
         if (request.getImageURL() != null) product.setImageUrl(request.getImageURL());
-        product.setCategoryID(request.getCategory().getCategory_id());
+        product.setCategoryID(request.getCategory().getCategoryId());
 
         productRepository.save(product);
 
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByCategory(Categories category) {
-        return productRepository.findAllByCategoryID(category.getCategory_id());
+        return productRepository.findAllByCategoryID(category.getCategoryId());
     }
 
     @Override
