@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.example.prm392front.R;
 import com.example.prm392front.api.ApiClient;
 import com.example.prm392front.model.Product;
+import com.example.prm392front.respond.ApiResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,12 +59,12 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void loadProduct(int productID) {
-        ApiClient.getApiService().getProductById(productID).enqueue(new Callback<>() {
+        ApiClient.getApiService().getProductById(productID).enqueue(new Callback<ApiResponse<Product>>() {
             @SuppressLint("DefaultLocale")
             @Override
-            public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+            public void onResponse(@NonNull Call<ApiResponse<Product>> call, @NonNull Response<ApiResponse<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    currentProduct = response.body();
+                    currentProduct = response.body().getData();
                     tvName.setText(currentProduct.getProductName());
                     tvPrice.setText(String.format("$%.2f", currentProduct.getPrice()));
                     tvDesc.setText(currentProduct.getFullDescription());
@@ -74,7 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<Product>> call, @NonNull Throwable t) {
                 Toast.makeText(ProductDetailActivity.this, "Failed to load product", Toast.LENGTH_SHORT).show();
             }
         });

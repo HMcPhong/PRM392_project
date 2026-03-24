@@ -15,6 +15,8 @@ import com.example.prm392front.R;
 import com.example.prm392front.adapter.CartAdapter;
 import com.example.prm392front.api.ApiClient;
 import com.example.prm392front.model.CartItem;
+import com.example.prm392front.respond.ApiResponse;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,11 +57,11 @@ public class CartActivity extends AppCompatActivity {
 
     private void loadCart() {
         ApiClient.getApiService().getCartItems(currentUserID)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<ApiResponse<List<CartItem>>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<CartItem>> call, @NonNull Response<List<CartItem>> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<List<CartItem>>> call, @NonNull Response<ApiResponse<List<CartItem>>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            List<CartItem> items = response.body();
+                            List<CartItem> items = response.body().getData();
                             adapter = new CartAdapter(CartActivity.this, items, new CartAdapter.CartActionListener() {
                                 @Override
                                 public void onQuantityChanged(CartItem item, int newQty) {
@@ -77,7 +79,7 @@ public class CartActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<CartItem>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<List<CartItem>>> call, @NonNull Throwable t) {
                         Toast.makeText(CartActivity.this, "Failed to load cart", Toast.LENGTH_SHORT).show();
                     }
                 });

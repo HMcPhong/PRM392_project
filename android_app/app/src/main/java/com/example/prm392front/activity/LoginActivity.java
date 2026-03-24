@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prm392front.respond.ApiResponse;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.prm392front.R;
 import com.example.prm392front.api.ApiClient;
@@ -61,11 +62,11 @@ public class LoginActivity extends AppCompatActivity {
         ApiClient.getApiService().login(username, password)
                 .enqueue(new Callback<>() {
                     @Override
-                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<User>> call, @NonNull Response<ApiResponse<User>> response) {
                         btnLogin.setEnabled(true);
                         btnLogin.setText("Login");
                         if (response.isSuccessful() && response.body() != null) {
-                            User user = response.body();
+                            User user = response.body().getData();
                             // Save user info to SharedPreferences (acts like a session)
                             SharedPreferences prefs = getSharedPreferences("MyApp", MODE_PRIVATE);
                             prefs.edit()
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<User>> call, @NonNull Throwable t) {
                         btnLogin.setEnabled(true);
                         btnLogin.setText("Login");
                         Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();

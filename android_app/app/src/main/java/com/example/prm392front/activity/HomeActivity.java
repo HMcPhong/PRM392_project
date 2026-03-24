@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.prm392front.respond.ApiResponse;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
@@ -70,32 +72,36 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadAllProducts() {
-        ApiClient.getApiService().getAllProducts().enqueue(new Callback<>() {
+        ApiClient.getApiService().getAllProducts().enqueue(new Callback<ApiResponse<List<Product>>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+            public void onResponse(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Response<ApiResponse<List<Product>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Product> products = response.body();
+
+                    List<Product> products = response.body().getData();
+
                     adapter = new ProductAdapter(HomeActivity.this, products, product -> {
                         Intent intent = new Intent(HomeActivity.this, ProductDetailActivity.class);
                         intent.putExtra("productID", product.getProductID());
                         startActivity(intent);
                     });
+
                     rvProducts.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
-                Toast.makeText(HomeActivity.this, "Failed to load products", Toast.LENGTH_SHORT).show();
+            public void onFailure(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void loadCategories() {
-        ApiClient.getApiService().getAllCategories().enqueue(new Callback<>() {
+        ApiClient.getApiService().getAllCategories().enqueue(new Callback<ApiResponse<List<Category>>>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
+            public void onResponse(@NonNull Call<ApiResponse<List<Category>>> call, @NonNull Response<ApiResponse<List<Category>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // "All" chip first
                     Chip allChip = new Chip(HomeActivity.this);
@@ -105,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
                     allChip.setOnClickListener(v -> loadAllProducts());
                     chipGroupCategories.addView(allChip);
 
-                    for (Category cat : response.body()) {
+                    for (Category cat : response.body().getData()) {
                         Chip chip = new Chip(HomeActivity.this);
                         chip.setText(cat.getCategoryName());
                         chip.setCheckable(true);
@@ -116,39 +122,39 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiResponse<List<Category>>> call, @NonNull Throwable t) {
             }
         });
     }
 
     private void filterByCategory(int categoryID) {
         ApiClient.getApiService().getProductsByCategory(categoryID)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Response<ApiResponse<List<Product>>> response) {
                         if (response.isSuccessful() && response.body() != null && adapter != null) {
-                            adapter.updateList(response.body());
+                            adapter.updateList(response.body().getData());
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Throwable t) {
                     }
                 });
     }
 
     private void searchProducts(String query) {
         ApiClient.getApiService().searchProducts(query)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<ApiResponse<List<Product>>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Response<ApiResponse<List<Product>>> response) {
                         if (response.isSuccessful() && response.body() != null && adapter != null) {
-                            adapter.updateList(response.body());
+                            adapter.updateList(response.body().getData());
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<List<Product>>> call, @NonNull Throwable t) {
                     }
                 });
     }

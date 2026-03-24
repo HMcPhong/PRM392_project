@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.prm392front.R;
 import com.example.prm392front.api.ApiClient;
 import com.example.prm392front.model.User;
+import com.example.prm392front.respond.ApiResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,11 +50,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadProfile() {
         ApiClient.getApiService().getUserById(currentUserID)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<ApiResponse<User>>() {
                     @Override
-                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<User>> call, @NonNull Response<ApiResponse<User>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            User u = response.body();
+                            User u = response.body().getData();
                             tvName.setText(u.getUserName());
                             tvRole.setText(u.getRole());
                             tvInitial.setText(u.getUserName().substring(0, 1).toUpperCase());
@@ -63,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<User>> call, @NonNull Throwable t) {
                         Toast.makeText(ProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                     }
                 });

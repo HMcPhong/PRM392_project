@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.prm392front.respond.ApiResponse;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.prm392front.R;
 import com.example.prm392front.api.ApiClient;
@@ -65,9 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Register as customer by default
         ApiClient.getApiService().registerCustomer(newUser)
-                .enqueue(new Callback<>() {
+                .enqueue(new Callback<ApiResponse<User>>() {
                     @Override
-                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                    public void onResponse(@NonNull Call<ApiResponse<User>> call, @NonNull Response<ApiResponse<User>> response) {
                         btnRegister.setEnabled(true);
                         if (response.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Registered successfully! Please login.", Toast.LENGTH_LONG).show();
@@ -79,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<ApiResponse<User>> call, @NonNull Throwable t) {
                         btnRegister.setEnabled(true);
                         Toast.makeText(RegisterActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
