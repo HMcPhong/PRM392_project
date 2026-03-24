@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addCart(int userId, int productId, int quantity) {
         Carts carts = getCartByUserId(userId);
-        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCart_id());
+        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCartId());
         boolean prductExist = false;
         for (CartItem item : cartItems) {
             if (item.getProductId() == productId) {
@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = new CartItem();
             cartItem.setProductId(productId);
             cartItem.setQuantity(quantity);
-            cartItem.setCartId(carts.getCart_id());
+            cartItem.setCartId(carts.getCartId());
             updateCartItemPrice(cartItem);
             cartItemRepository.save(cartItem);
         }
@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void updateCartItem(int userId, int productId, int quantity) {
         Carts carts = getCartByUserId(userId);
-        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCart_id());
+        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCartId());
 
         boolean prductExist = false;
         for (CartItem item : cartItems) {
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeCartItem(int userId, int productId) {
         Carts carts = getCartByUserId(userId);
-        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCart_id());
+        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCartId());
         for (CartItem item : cartItems) {
             if (item.getProductId() == productId) {
                 cartItemRepository.delete(item);
@@ -97,7 +97,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void clearCart(int userId) {
         Carts carts = getCartByUserId(userId);
-        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCart_id());
+        List<CartItem> cartItems = cartItemRepository.findByCartId(carts.getCartId());
         cartItemRepository.deleteAll(cartItems);
         carts.setTotal_price(getCartTotal(userId));
         cartRepository.save(carts);
@@ -114,7 +114,7 @@ public class CartServiceImpl implements CartService {
 
     public Double getCartTotal(int userId) {
         Carts carts = getCartByUserId(userId);
-        List<CartItem> items = cartItemRepository.findByCartId(carts.getCart_id());
+        List<CartItem> items = cartItemRepository.findByCartId(carts.getCartId());
         double total = 0.0;
         for (CartItem item : items) {
             total += item.getPrice();

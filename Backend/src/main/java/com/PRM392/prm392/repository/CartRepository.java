@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<Carts, Integer> {
     Carts findCartsByUserId(int user_id);
+    Carts findCartsByCartId(int cart_id);
 }

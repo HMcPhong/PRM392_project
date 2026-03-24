@@ -15,7 +15,7 @@ public class Carts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    Integer cart_id;
+    Integer cartId;
 
     @JoinColumn(name = "user_id")
     Integer userId;

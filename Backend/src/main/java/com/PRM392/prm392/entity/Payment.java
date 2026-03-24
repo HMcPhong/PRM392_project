@@ -6,7 +6,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -17,18 +18,18 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
-    Integer payment_id;
+    Integer paymentId;
 
     @JoinColumn(name = "order_id")
-    Integer order_id;
+    Integer orderId;
 
     @Column(name = "amount")
     Double amount;
 
     @Column(name = "payment_date")
-    Date payment_date;
+    LocalDateTime paymentDate;
 
     @Column(name = "payment_status")
-    PaymentStatus payment_status;
+    PaymentStatus paymentStatus;
 
 }
