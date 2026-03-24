@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findByProductID(Integer productID);
-    List<Product> findAllByProductName(String productName);
+    List<Product> findAllByProductNameContainingIgnoreCase(String productName);
     List<Product> findAllByCategoryID(int categoryID);
 }

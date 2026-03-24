@@ -24,6 +24,6 @@ public class ProductCreateRequest {
 
     String imageURL;
 
-    Categories category;
+    int categoryID;
 
 }

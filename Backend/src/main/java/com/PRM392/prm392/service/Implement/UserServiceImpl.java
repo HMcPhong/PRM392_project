@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 
         Carts cart = new Carts();
         cart.setUserId(customer.getUserID());
+        cart.setTotal_price(0.0);
         cart.setCartStatus(CartStatus.ACTIVE);
         cartRepository.save(cart);
 

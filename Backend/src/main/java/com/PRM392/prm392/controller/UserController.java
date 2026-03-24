@@ -56,13 +56,14 @@ public class UserController {
     }
 
     @GetMapping("/auth/login")
-    public ResponseEntity<ResponseData<?>> login (@RequestParam String username, @RequestParam String password){
+    public ResponseEntity<ResponseData<?>> login (@RequestParam String userName, @RequestParam String password){
         try {
-            User user = userRepository.findByUserName(username);
+            System.out.println(userName);
+            User user = userRepository.findByUserName(userName);
             if (user == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseData<>("User not found", null));
-            } else if(!userService.login(username, password)){
+            } else if(!userService.login(userName, password)){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new ResponseData<>("Wrong password", null));
             }
@@ -84,7 +85,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userID}")
+    @GetMapping("/search/{userID}")
     public ResponseEntity<ResponseData<?>> getUser(@PathVariable int userID) {
         try {
             User user = userService.getUserById(userID);

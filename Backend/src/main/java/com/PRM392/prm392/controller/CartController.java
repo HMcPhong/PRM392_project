@@ -1,11 +1,14 @@
 package com.PRM392.prm392.controller;
 
+import com.PRM392.prm392.entity.CartItem;
 import com.PRM392.prm392.entity.Carts;
 import com.PRM392.prm392.response.ResponseData;
 import com.PRM392.prm392.service.Interface.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -26,6 +29,18 @@ public class CartController {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(new ResponseData<>("Success", carts));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseData<>(e.getMessage(), null));
+        }
+    }
+
+    // Get cart items for user
+    @GetMapping("/{userID}/items")
+    public ResponseEntity<ResponseData<?>> getCartItems(@PathVariable("userID") int userID) {
+        try {
+            List<CartItem> cartItems = cartService.getCartItemsByUserId(userID);
+            return ResponseEntity.ok(new ResponseData<>("Success", cartItems));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseData<>(e.getMessage(), null));

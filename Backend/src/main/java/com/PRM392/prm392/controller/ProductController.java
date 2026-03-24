@@ -35,7 +35,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{productID}")
+    @GetMapping("/search/{productID}")
     public ResponseEntity<ResponseData<?>> getProduct(@PathVariable int productID) {
         try {
             Product product = productService.getProduct(productID);

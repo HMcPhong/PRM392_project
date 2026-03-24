@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
         if(request.getTechnicalSpecification() != null) product.setTechnicalSpecifications(request.getTechnicalSpecification());
         product.setPrice(request.getPrice());
         if (request.getImageURL() != null) product.setImageUrl(request.getImageURL());
-        product.setCategoryID(request.getCategory().getCategoryId());
+        product.setCategoryID(request.getCategoryID());
 
         productRepository.save(product);
 
@@ -54,6 +54,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByProductName(String productName) {
-        return productRepository.findAllByProductName(productName);
+        return productRepository.findAllByProductNameContainingIgnoreCase(productName);
     }
 }
