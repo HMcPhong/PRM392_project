@@ -1,7 +1,7 @@
 package com.PRM392.prm392.service.Interface;
 
 import com.PRM392.prm392.entity.User;
-import com.PRM392.prm392.request.create.User.CustomerCreateRequet;
+import com.PRM392.prm392.request.create.User.CustomerCreateRequest;
 
 import java.util.List;
 
@@ -13,11 +13,13 @@ public interface UserService {
 
 
     /* Customer */
-    User createCustomer(CustomerCreateRequet user);
+    User createCustomer(CustomerCreateRequest user);
 
     User getUserById(int id);
 
 
     /* Manager */
+    User createManager(CustomerCreateRequest user);
+
     List<User> getAllUser();
 }

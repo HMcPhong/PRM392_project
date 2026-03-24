@@ -12,30 +12,30 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "orders")
+@Table(name = "Orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "OrderID")
     Integer orderId;
 
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "CartID")
     Integer cartId;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserID")
     Integer userId;
 
-    @Column(name = "payment_method")
+    @Column(name = "PaymentMethod")
     PaymentMethod paymentMethod;
 
-    @Column(name = "billing_address")
+    @Column(name = "BillingAddress")
     String billingAddress;
 
-    @Column(name = "order_status")
+    @Column(name = "OrderStatus")
     OrderStatus orderStatus;
 
-    @Column(name = "order_date")
+    @Column(name = "OrderDate")
     LocalDateTime orderDate;
 
 }

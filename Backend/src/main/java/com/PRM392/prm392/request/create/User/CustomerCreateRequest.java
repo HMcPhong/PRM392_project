@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CustomerCreateRequet {
+public class CustomerCreateRequest {
 
     @NotBlank
     String userName;

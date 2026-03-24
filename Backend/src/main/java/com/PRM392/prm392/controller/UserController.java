@@ -2,7 +2,7 @@ package com.PRM392.prm392.controller;
 
 import com.PRM392.prm392.entity.User;
 import com.PRM392.prm392.repository.UserRepository;
-import com.PRM392.prm392.request.create.User.CustomerCreateRequet;
+import com.PRM392.prm392.request.create.User.CustomerCreateRequest;
 import com.PRM392.prm392.response.ResponseData;
 import com.PRM392.prm392.service.Interface.UserService;
 import org.springframework.http.HttpStatus;
@@ -24,15 +24,31 @@ public class UserController {
     }
 
     @PostMapping("/auth/customer/sign_up")
-    public ResponseEntity<ResponseData<?>> createCustomer (@RequestBody CustomerCreateRequet request){
+    public ResponseEntity<ResponseData<?>> createCustomer (@RequestBody CustomerCreateRequest request){
         try {
             boolean isCreated = userService.isExist(request.getUserName());
-            if (!isCreated) {
+            if (isCreated) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
                         .body(new ResponseData<>("Account already exists", null));
             }
             User createdUser = userService.createCustomer(request);
             return ResponseEntity.ok(new ResponseData<>("Customer created successfully", createdUser));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseData<>(e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/auth/manager/sign_up")
+    public ResponseEntity<ResponseData<?>> createManager (@RequestBody CustomerCreateRequest request){
+        try {
+            boolean isCreated = userService.isExist(request.getUserName());
+            if (isCreated) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                        .body(new ResponseData<>("Account already exists", null));
+            }
+            User createdUser = userService.createManager(request);
+            return ResponseEntity.ok(new ResponseData<>("Manager created successfully", createdUser));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseData<>(e.getMessage(), null));

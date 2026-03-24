@@ -8,33 +8,33 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "products")
+@Table(name = "Products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "ProductID")
     Integer productID;
 
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "ProductName", nullable = false)
     String productName;
 
-    @Column(name = "brief_description")
+    @Column(name = "BriefDescription")
     String briefDescription;
 
-    @Column(name = "full_description")
+    @Column(name = "FullDescription")
     String fullDescription;
 
-    @Column(name = "technical_specifications")
+    @Column(name = "TechnicalSpecifications")
     String technicalSpecifications;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "Price", nullable = false)
     Double price;
 
-    @Column(name = "image_url")
+    @Column(name = "ImageURL")
     String imageUrl;
 
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "CategoryID")
     Integer categoryID;
 
 }

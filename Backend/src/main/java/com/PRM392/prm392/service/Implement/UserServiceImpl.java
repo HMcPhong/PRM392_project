@@ -6,7 +6,7 @@ import com.PRM392.prm392.enums.Role;
 import com.PRM392.prm392.enums.Status.CartStatus;
 import com.PRM392.prm392.repository.CartRepository;
 import com.PRM392.prm392.repository.UserRepository;
-import com.PRM392.prm392.request.create.User.CustomerCreateRequet;
+import com.PRM392.prm392.request.create.User.CustomerCreateRequest;
 import com.PRM392.prm392.service.Interface.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     /* Customer */
 
     @Override
-    public User createCustomer(CustomerCreateRequet request) {
+    public User createCustomer(CustomerCreateRequest request) {
         User customer = new User();
         customer.setUserName(request.getUserName());
         customer.setPasswordHash(bCryptPasswordEncoder.encode(request.getPassword()));
@@ -69,6 +69,20 @@ public class UserServiceImpl implements UserService {
 
 
     /* Manager */
+
+    @Override
+    public User createManager(CustomerCreateRequest request) {
+        User manager = new User();
+        manager.setUserName(request.getUserName());
+        manager.setPasswordHash(bCryptPasswordEncoder.encode(request.getPassword()));
+        if(request.getEmail() != null) manager.setEmail(request.getEmail());
+        if(request.getPhoneNumber() != null) manager.setPhoneNumber(request.getPhoneNumber());
+        if(request.getAddress() != null) manager.setAddress(request.getAddress());
+        manager.setRole(Role.MANAGER);
+        manager = userRepository.save(manager);
+
+        return manager;
+    }
 
     @Override
     public List<User> getAllUser() {

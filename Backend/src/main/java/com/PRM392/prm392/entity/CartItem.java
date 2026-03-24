@@ -8,24 +8,24 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "cart_items")
+@Table(name = "CartItems")
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id")
+    @Column(name = "CartItemID")
     Integer cartItemId;
 
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "CartID")
     Integer cartId;
 
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "ProductID")
     Integer productId;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "Quantity", nullable = false)
     Integer quantity;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "Price", nullable = false)
     Double price;
 
 }

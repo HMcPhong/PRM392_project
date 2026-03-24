@@ -8,14 +8,14 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "categories")
+@Table(name = "Categories")
 public class Categories {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "CategoryID")
     Integer categoryId;
 
-    @Column(name = "category_name", nullable = false)
+    @Column(name = "CategoryName", nullable = false)
     String categoryName;
 }

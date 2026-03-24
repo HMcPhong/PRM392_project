@@ -10,21 +10,21 @@ import java.util.Date;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "chat_messages")
+@Table(name = "ChatMessages")
 public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_message_id")
+    @Column(name = "ChatMessageID")
     Integer chatMessageId;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserID")
     Integer userId;
 
-    @Column(name = "message")
+    @Column(name = "Message")
     String message;
 
-    @Column(name = "sent_at")
+    @Column(name = "SentAt")
     Date sentAt;
 
 }

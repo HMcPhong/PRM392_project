@@ -8,21 +8,21 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "store_locations")
+@Table(name = "StoreLocations")
 public class StoreLocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "location_id")
+    @Column(name = "LocationID")
     Integer locationId;
 
-    @Column(name = "latitude")
+    @Column(name = "Latitude")
     Double latitude;
 
-    @Column(name = "longitude")
+    @Column(name = "Longitude")
     Double longitude;
 
-    @Column(name = "address")
+    @Column(name = "Address")
     String address;
 
 }

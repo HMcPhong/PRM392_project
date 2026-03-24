@@ -10,24 +10,24 @@ import java.util.Date;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "notifications")
+@Table(name = "Notifications")
 public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notification_id")
+    @Column(name = "NotificationID")
     Integer notificationId;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserID")
     Integer userId;
 
-    @Column(name = "message")
+    @Column(name = "Message")
     String message;
 
-    @Column(name = "is_read")
+    @Column(name = "IsRead")
     Boolean isRead;
 
-    @Column(name = "created_at")
+    @Column(name = "CreatedAt")
     Date createdAt;
 
 }

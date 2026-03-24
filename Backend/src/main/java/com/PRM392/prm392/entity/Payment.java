@@ -12,24 +12,24 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "payments")
+@Table(name = "Payments")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_id")
+    @Column(name = "PaymentID")
     Integer paymentId;
 
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "OrderID")
     Integer orderId;
 
-    @Column(name = "amount")
+    @Column(name = "Amount")
     Double amount;
 
-    @Column(name = "payment_date")
+    @Column(name = "PaymentDate")
     LocalDateTime paymentDate;
 
-    @Column(name = "payment_status")
+    @Column(name = "PaymentStatus")
     PaymentStatus paymentStatus;
 
 }

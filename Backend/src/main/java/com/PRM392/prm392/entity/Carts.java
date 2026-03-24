@@ -9,20 +9,20 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "carts")
+@Table(name = "Carts")
 public class Carts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id")
+    @Column(name = "CartID")
     Integer cartId;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserID")
     Integer userId;
 
-    @Column(name = "total_price")
+    @Column(name = "TotalPrice")
     Double total_price;
 
-    @Column(name = "status")
+    @Column(name = "Status")
     CartStatus cartStatus;
 }

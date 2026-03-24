@@ -10,31 +10,32 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "UserID")
     Integer userID;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "Username", nullable = false)
     String userName;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "PasswordHash", nullable = false)
     String passwordHash;
 
     @Email
-    @Column(name = "email", nullable = false)
+    @Column(name = "Email", nullable = false)
     String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "PhoneNumber")
     String phoneNumber;
 
-    @Column(name = "address")
+    @Column(name = "Address")
     String address;
 
-    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Role", nullable = false)
     Role role;
 
 }
