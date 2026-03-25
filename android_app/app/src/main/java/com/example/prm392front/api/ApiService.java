@@ -48,14 +48,14 @@ public interface ApiService {
     @GET("api/products")
     Call<ApiResponse<List<Product>>> getAllProducts();
 
+    @GET("api/products/search")
+    Call<ApiResponse<List<Product>>> searchProducts(@Query("productName") String productName);
+
     @GET("api/products/search/{productID}")
     Call<ApiResponse<Product>> getProductById(@Path("productID") int productID);
 
     @GET("api/products/{categoryID}")
     Call<ApiResponse<List<Product>>> getProductsByCategory(@Path("categoryID") int categoryID);
-
-    @GET("api/products/search/")
-    Call<ApiResponse<List<Product>>> searchProducts(@Query("productName") String productName);
 
     @POST("api/products")
     Call<ApiResponse<Product>> createProduct(@Body Product product);

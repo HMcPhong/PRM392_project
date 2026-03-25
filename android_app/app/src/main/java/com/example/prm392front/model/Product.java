@@ -9,7 +9,7 @@ public class Product {
     @SerializedName("fullDescription")         private String fullDescription;
     @SerializedName("technicalSpecifications") private String technicalSpecifications;
     @SerializedName("price")                   private double price;
-    @SerializedName("imageURL")                private String imageURL;
+    @SerializedName("imageUrl")                private String imageUrl;
     @SerializedName("categoryID")              private int categoryID;
 
     public int getProductID()                   { return productID; }
@@ -18,6 +18,6 @@ public class Product {
     public String getFullDescription()          { return fullDescription; }
     public String getTechnicalSpecifications()  { return technicalSpecifications; }
     public double getPrice()                    { return price; }
-    public String getImageURL()                 { return imageURL; }
+    public String getImageUrl()                 { return imageUrl; }
     public int getCategoryID()                  { return categoryID; }
 }

@@ -16,8 +16,12 @@ import com.example.prm392front.adapter.CartAdapter;
 import com.example.prm392front.api.ApiClient;
 import com.example.prm392front.model.CartItem;
 import com.example.prm392front.respond.ApiResponse;
+import com.example.prm392front.utils.NotificationHelper;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +31,7 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
     CartAdapter adapter;
     TextView tvTotal;
-    Button btnCheckout;
+    Button btnCheckout, btnClearCart;
     int currentUserID;
 
     @Override
@@ -42,15 +46,26 @@ public class CartActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MyApp", MODE_PRIVATE);
         currentUserID = prefs.getInt("userID", -1);
 
-        rvCart      = findViewById(R.id.rvCart);
-        tvTotal     = findViewById(R.id.tvTotal);
+        rvCart = findViewById(R.id.rvCart);
+        tvTotal = findViewById(R.id.tvTotal);
         btnCheckout = findViewById(R.id.btnCheckout);
+        btnClearCart = findViewById(R.id.btnClearCart);
 
         rvCart.setLayoutManager(new LinearLayoutManager(this));
 
         btnCheckout.setOnClickListener(v ->
                 Toast.makeText(this, "Checkout coming soon!", Toast.LENGTH_SHORT).show()
         );
+
+        btnClearCart.setOnClickListener(v -> {
+            // Show confirmation dialog before clearing
+            new androidx.appcompat.app.AlertDialog.Builder(CartActivity.this)
+                    .setTitle("Clear Cart")
+                    .setMessage("Are you sure you want to remove all items from your cart?")
+                    .setPositiveButton("Yes, clear it", (dialog, which) -> clearCart())
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        });
 
         loadCart();
     }
@@ -75,6 +90,9 @@ public class CartActivity extends AppCompatActivity {
                             });
                             rvCart.setAdapter(adapter);
                             recalculateTotal(items);
+
+                            NotificationHelper.showCartNotification(
+                                    CartActivity.this, items.size());
                         }
                     }
 
@@ -87,7 +105,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void updateItem(CartItem item, int newQty) {
         ApiClient.getApiService()
-                .updateCartItem(currentUserID, item.getProductID(), newQty)
+                .updateCartItem(currentUserID, item.getProductId(), newQty)
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -102,7 +120,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void deleteItem(CartItem item) {
         ApiClient.getApiService()
-                .removeCartItem(currentUserID, item.getProductID())
+                .removeCartItem(currentUserID, item.getProductId())
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
@@ -115,11 +133,38 @@ public class CartActivity extends AppCompatActivity {
                 });
     }
 
+    private void clearCart() {
+        ApiClient.getApiService().clearCart(currentUserID)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Void> call,
+                                           @NonNull Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(CartActivity.this,
+                                    "Cart cleared!", Toast.LENGTH_SHORT).show();
+                            // Cancel the notification badge since cart is now empty
+                            NotificationHelper.cancelCartNotification(CartActivity.this);
+                            // Reload to show empty cart
+                            loadCart();
+                        } else {
+                            Toast.makeText(CartActivity.this,
+                                    "Failed to clear cart", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                        Toast.makeText(CartActivity.this,
+                                "Network error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     @SuppressLint("DefaultLocale")
     private void recalculateTotal(List<CartItem> items) {
         double total = 0;
-        for (CartItem i : items) total += i.getPrice() * i.getQuantity();
-        tvTotal.setText(String.format("$%.2f", total));
+        for (CartItem i : items) total += i.getPrice(); // ← remove * i.getQuantity()
+        tvTotal.setText(NumberFormat.getNumberInstance(Locale.US).format(total) + "đ");
     }
 
     @Override

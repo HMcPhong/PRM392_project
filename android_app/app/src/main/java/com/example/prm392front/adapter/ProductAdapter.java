@@ -12,10 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.prm392front.R;
 import com.example.prm392front.model.Product;
+
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
+    //private static final String BASE_URL = "http://10.0.2.2:8080/";
+    private static final String BASE_URL = "http://192.168.1.3:8080/";
     public interface OnProductClickListener {
         void onProductClick(Product product);
     }
@@ -37,16 +42,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return new ProductViewHolder(view);
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = products.get(position);
         holder.tvName.setText(p.getProductName());
         holder.tvDesc.setText(p.getBriefDescription());
-        holder.tvPrice.setText(String.format("$%.2f", p.getPrice()));
+        holder.tvPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()) + "đ");
 
         Glide.with(context)
-                .load(p.getImageURL())
+                .load(BASE_URL + p.getImageUrl())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.imgProduct);
@@ -59,7 +64,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<Product> newList) {
-        this.products = newList;
+        this.products.clear();
+        this.products.addAll(newList);
         notifyDataSetChanged();
     }
 

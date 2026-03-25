@@ -13,8 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.prm392front.R;
 import com.example.prm392front.api.ApiClient;
+import com.example.prm392front.model.CartItem;
 import com.example.prm392front.model.Product;
 import com.example.prm392front.respond.ApiResponse;
+import com.example.prm392front.utils.NotificationHelper;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,7 +74,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     tvDesc.setText(currentProduct.getFullDescription());
                     tvSpecs.setText(currentProduct.getTechnicalSpecifications());
                     Glide.with(ProductDetailActivity.this)
-                            .load(currentProduct.getImageURL())
+                            .load(currentProduct.getImageUrl())
                             .into(imgProduct);
                 }
             }
@@ -100,6 +104,24 @@ public class ProductDetailActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                         Toast.makeText(ProductDetailActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                     }
+                });
+    }
+
+    private void updateCartNotification() {
+        ApiClient.getApiService().getCartItems(currentUserID)
+                .enqueue(new Callback<ApiResponse<List<CartItem>>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ApiResponse<List<CartItem>>> call,
+                                           @NonNull Response<ApiResponse<List<CartItem>>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            int count = response.body().getData().size();
+                            NotificationHelper.showCartNotification(
+                                    ProductDetailActivity.this, count);
+                        }
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<ApiResponse<List<CartItem>>> call,
+                                          @NonNull Throwable t) { }
                 });
     }
 

@@ -20,20 +20,56 @@
         android:padding="16dp"
         android:elevation="8dp">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_marginBottom="12dp">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="@string/total"
-                android:textStyle="bold" android:textSize="18sp" android:textColor="@color/text_primary"/>
-            <TextView android:id="@+id/tvTotal"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/no_money" android:textStyle="bold"
-                android:textSize="18sp" android:textColor="@color/accent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/total"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/text_primary"/>
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_money"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/accent"/>
         </LinearLayout>
 
-        <Button android:id="@+id/btnCheckout"
-            android:layout_width="match_parent" android:layout_height="52dp"
-            android:text="@string/checkout_prompt"
-            android:backgroundTint="@color/primary"/>
+        <!-- Two buttons side by side -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnClearCart"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="@string/clear_cart"
+                android:backgroundTint="@color/error"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnCheckout"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="2"
+                android:text="@string/checkout_prompt"
+                android:backgroundTint="@color/primary"/>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

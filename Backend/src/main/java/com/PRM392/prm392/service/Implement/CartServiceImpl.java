@@ -115,16 +115,24 @@ public class CartServiceImpl implements CartService {
 
     public void updateCartItemPrice(CartItem cartItem) {
         Product product = productRepository.findByProductID(cartItem.getProductId());
-        cartItem.setPrice(product.getPrice()*cartItem.getQuantity());
+
+        double unitPrice = product.getPrice();
+        int quantity = cartItem.getQuantity();
+
+        cartItem.setPrice(unitPrice * quantity);
     }
 
     public Double getCartTotal(int userId) {
         Carts carts = getCartByUserId(userId);
         List<CartItem> items = cartItemRepository.findByCartId(carts.getCartId());
+
         double total = 0.0;
+
         for (CartItem item : items) {
-            total += item.getPrice();
+            Product product = productRepository.findByProductID(item.getProductId());
+            total += product.getPrice() * item.getQuantity();
         }
+
         return total;
     }
 

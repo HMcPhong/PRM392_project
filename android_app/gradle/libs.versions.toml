@@ -16,6 +16,7 @@ materialVersion = "1.11.0"
 recyclerview = "1.4.0"
 retrofit = "2.9.0"
 firebaseInappmessaging = "22.0.2"
+shortcutbadger = "1.1.22"
 
 [libraries]
 appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -35,6 +36,7 @@ material-v1110 = { module = "com.google.android.material:material", version.ref 
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
+shortcutbadger = { module = "me.leolin:ShortcutBadger", version.ref = "shortcutbadger" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

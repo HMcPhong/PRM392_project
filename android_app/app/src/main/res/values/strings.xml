@@ -10,6 +10,7 @@
     <string name="shop_app">ShopApp</string>
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
+    <string name="search">Search</string>
 
     <string name="welcome_back">Welcome Back</string>
     <string name="sign_in_continue">Sign in to continue</string>
@@ -36,7 +37,8 @@
 
     <string name="remove">Remove</string>
     <string name="total">Total</string>
-    <string name="no_money">$0.00</string>
+    <string name="no_money">0đ</string>
+    <string name="clear_cart">Clear Cart</string>
     <string name="checkout_prompt">Proceed to Checkout</string>
 
     <string name="U">U</string>
